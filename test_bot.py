@@ -41,7 +41,6 @@ def connect():
 
 
 def write_to_exchange(exchange, obj):
-    put('writing to exchange...')
     json.dump(obj, exchange)
     exchange.write("\n")
 
@@ -148,11 +147,11 @@ def main():
             put('putting sell order')
             write_to_exchange(exchange, sell(id, "USD", 80020, 1))
             process(read_from_exchange(exchange))
-
+            print('i:', i)
             id += 1
             time.sleep(5)
-        except:
-            continue
+        except Exception as e:
+            print(e)
     # A common mistake people make is to call write_to_exchange() > 1
     # time for every read_from_exchange() response.
     # Since many write messages generate marketdata, this will cause an
