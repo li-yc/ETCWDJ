@@ -151,7 +151,7 @@ def main():
             id += 1
             time.sleep(5)
         except Exception as e:
-            print(e)
+            print('ERROR:', e)
     # A common mistake people make is to call write_to_exchange() > 1
     # time for every read_from_exchange() response.
     # Since many write messages generate marketdata, this will cause an
@@ -182,9 +182,6 @@ def cancel_all():
         else:
             print('something unexpected in cancel_all(), msg_type=', server_msg['type'])
 
-
-
-cancel_all()
 
 if __name__ == "__main__":
     main()
