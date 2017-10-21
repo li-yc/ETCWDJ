@@ -46,6 +46,7 @@ sym = {}
 
 trade_turn = 0
 trade_record = []
+record = []
 
 
 def hello():
@@ -61,9 +62,11 @@ def sell(id, sym, price, size):
 
 
 def add_trade(sym, price, size):
-    if (not record.has_key(sym)):
-        record[sym] = []
-    record[sym].append((price, size))
+    try:
+        record[sym].append((price, size))
+    except Exception as e:
+        record = []
+        record[sym].append((price, size))
 
 
 def process(info):
