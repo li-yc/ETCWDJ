@@ -1,3 +1,4 @@
+# coding=utf-8
 # chmod +x bot.py
 # while true; do ./bot.py; sleep 1; done
 
@@ -13,7 +14,7 @@ import time
 team_name= "WUDUJIAO"
 # This variable dictates whether or not the bot is connecting to the prod
 # or test exchange. Be careful with this switch!
-test_mode = true
+test_mode = True
 
 # This setting changes which test exchange is connected to.
 # 0 is prod-like
