@@ -57,7 +57,7 @@ book_record = {}
 
 
 def dumps():
-    with open('data') as f:
+    with open('data.txt') as f:
         pass
 
 
@@ -120,10 +120,13 @@ def process(info):
         pass
 
 
-def processInfo(exchange):
-    info = read_from_exchange(exchange)
-    process(info)
-    return info
+def process_info(exchange, times, interval=0.05):
+    t = 0
+    while t < times:
+        t += interval
+        time.sleep(interval)
+        info = read_from_exchange(exchange)
+        process(info)
 
 # ~~~~~============== MAIN LOOP ==============~~~~~
 
@@ -143,10 +146,10 @@ def main():
             process(info)
             put('putting buy order')
             write_to_exchange(exchange, buy(id, "USD", 79980, 1))
-            process(read_from_exchange(exchange))
+            process_info(exchange, 2)
             put('putting sell order')
             write_to_exchange(exchange, sell(id, "USD", 80020, 1))
-            process(read_from_exchange(exchange))
+            process_info(exchange, 2)
             print('i:', i)
             id += 1
             time.sleep(5)
