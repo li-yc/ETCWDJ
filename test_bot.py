@@ -142,14 +142,14 @@ def main():
         i = i + 1
         try:
             put('putting buy order')
-            write_to_exchange(exchange, buy(id, "USD", 79980, 1))
-            process_info(exchange, 2)
+            write_to_exchange(exchange, buy(id, "USD", 79998, 1))
+            process_info(exchange, 2, interval=0.2)
             put('putting sell order')
-            write_to_exchange(exchange, sell(id, "USD", 80020, 1))
-            process_info(exchange, 2)
+            id += 1
+            write_to_exchange(exchange, sell(id, "USD", 80002, 1))
+            process_info(exchange, 2, interval=0.2)
             print('i:', i)
             id += 1
-            time.sleep(5)
 #        except Exception as e:
 #            print('ERROR:', e)
     # A common mistake people make is to call write_to_exchange() > 1
