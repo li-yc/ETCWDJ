@@ -111,11 +111,11 @@ def process(info):
     elif info["type"] == "trade":
         add_trade(info["symbol"], info["price"], info["size"])
     elif info["type"] == "ack":
-        pass
+        put('order placed, order_id=', info['order_id'])
     elif info["type"] == "reject":
-        pass
+        put('rejected, error message: ', info['error'])
     elif info["type"] == "fill":
-        pass
+        put('order traded, symbol=' + info['symbol'] + ', dir=' + info['dir'] + ', price=' + info['price'])
     else:
         pass
 
