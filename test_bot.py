@@ -141,9 +141,6 @@ def main():
     while i < 10:
         i = i + 1
         try:
-            info = read_from_exchange(exchange)
-            put('info: ', info)
-            process(info)
             put('putting buy order')
             write_to_exchange(exchange, buy(id, "USD", 79980, 1))
             process_info(exchange, 2)
@@ -153,8 +150,8 @@ def main():
             print('i:', i)
             id += 1
             time.sleep(5)
-        except Exception as e:
-            print('ERROR:', e)
+#        except Exception as e:
+#            print('ERROR:', e)
     # A common mistake people make is to call write_to_exchange() > 1
     # time for every read_from_exchange() response.
     # Since many write messages generate marketdata, this will cause an
