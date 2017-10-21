@@ -101,7 +101,7 @@ def process(info):
             if abuy[0] > best_buy[0]:
                 best_buy = abuy
 
-        best_buy = sell[0]
+        best_sell = sell[0]
         for asell in sell:
             if asell[0] < best_sell[0]:
                 best_sell = asell
