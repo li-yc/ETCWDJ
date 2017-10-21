@@ -47,6 +47,8 @@ sym = {}
 trade_turn = 0
 trade_record = []
 record = []
+# symbol 到 buy 和 sell 的字典
+book_record = {}
 
 
 def hello():
@@ -81,7 +83,20 @@ def process(info):
     elif info["type"] == "error":
         print(info["error"])
     elif info["type"] == "book":
-        pass
+        buy = info['buy']
+        sell = info['sell']
+        best_sell = buy[0]
+        for abuy in buy:
+            if abuy[0] > best_sell[0]:
+                best_sell = abuy
+
+        best_buy = sell[0]
+        for asell in sell:
+            if asell[0] < best_sell[0]:
+                best_sell = asell
+
+        book_record[info['symbol']] = {'buy': buy, 'sell': sell, 'best_sell': best_sell, 'best_buy': best_buy}
+        print('book_record: ', book_record)
     elif info["type"] == "trade":
         add_trade(info["symbol"], info["price"], info["size"])
     elif info["type"] == "ack":
@@ -103,14 +118,14 @@ def main():
     while (1):
         try:
             info = read_from_exchange(exchange)
-            print(info)
+            print('info: ', info)
             process(info)
             write_to_exchange(exchange, buy(id, "USD", 78000, 10))
             info = read_from_exchange(exchange)
             id += 1
             write_to_exchange(exchange, sell(id, "USD", 82000, 10))
             time.sleep(5)
-        except Exception as e1:
+        except:
             continue
     # A common mistake people make is to call write_to_exchange() > 1
     # time for every read_from_exchange() response.
