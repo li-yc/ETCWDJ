@@ -107,7 +107,7 @@ def process(info):
                 best_sell = asell
 
         book_record[info['symbol']] = {'buy': buy, 'sell': sell, 'best_sell': best_sell, 'best_buy': best_buy}
-        print('book_record: ', book_record)
+        #print('book_record: ', book_record)
     elif info["type"] == "trade":
         add_trade(info["symbol"], info["price"], info["size"])
     elif info["type"] == "ack":
