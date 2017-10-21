@@ -144,6 +144,9 @@ def main():
 def cancel_all():
     index = 0
     exchange = connect()
+    write_to_exchange(exchange, hello())
+    info = read_from_exchange(exchange)
+    process(info)
     while index < 100:
         time.sleep(0.05)
         text = {
