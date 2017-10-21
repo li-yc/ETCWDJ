@@ -128,10 +128,12 @@ def main():
             info = read_from_exchange(exchange)
             print('info: ', info)
             process(info)
-            write_to_exchange(exchange, buy(id, "USD", 78000, 10))
-            info = read_from_exchange(exchange)
+            write_to_exchange(exchange, buy(id, "USD", 79980, 1))
+            process(read_from_exchange(exchange))
+            write_to_exchange(exchange, sell(id, "USD", 80020, 1))
+            process(read_from_exchange(exchange))
+
             id += 1
-            write_to_exchange(exchange, sell(id, "USD", 82000, 10))
             time.sleep(5)
         except:
             continue
