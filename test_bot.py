@@ -149,6 +149,7 @@ def cancel_all():
     process(info)
     while index < 100:
         time.sleep(0.05)
+        index = index + 1
         text = {
             'type': 'cancel', 'order_id': index,
         }
