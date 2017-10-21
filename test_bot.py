@@ -20,8 +20,8 @@ test_mode = True
 # 0 is prod-like
 # 1 is slower
 # 2 is empty
-test_exchange_index=1
-prod_exchange_hostname="production"
+test_exchange_index = 0
+prod_exchange_hostname = "production"
 
 port=25000 + (test_exchange_index if test_mode else 0)
 exchange_hostname = "test-exch-" + team_name if test_mode else prod_exchange_hostname
@@ -44,7 +44,6 @@ def read_from_exchange(exchange):
     return json.loads(exchange.readline())
 
 sym = {}
-
 trade_turn = 0
 trade_record = []
 record = []
@@ -70,6 +69,7 @@ def sell(id, sym, price, size):
 
 
 def add_trade(sym, price, size):
+    global record
     try:
         record[sym].append((price, size))
     except Exception as e:
@@ -121,9 +121,9 @@ def main():
     exchange = connect()
     id = 1
     write_to_exchange(exchange, hello())
-    i=0
-    while i<10:
-        i = i+1
+    i = 0
+    while i < 10:
+        i = i + 1
         try:
             info = read_from_exchange(exchange)
             print('info: ', info)
@@ -140,7 +140,29 @@ def main():
     # Since many write messages generate marketdata, this will cause an
     # exponential explosion in pending messages. Please, don't do that!
         
-        
+
+def cancel_all():
+    index = 0
+    exchange = connect()
+    while index < 100:
+        time.sleep(0.05)
+        text = {
+            'type': 'cancel', 'order_id': index,
+        }
+        write_to_exchange(exchange, text)
+        server_msg = read_from_exchange(exchange)
+        if server_msg['type'] == 'error':
+            print('after cancel all, return message: ', server_msg['error'])
+            return None
+        elif server_msg['type'] == 'out':
+            print('canceling all: order_id=', server_msg['order_id'])
+        elif server_msg['type'] == 'reject':
+            print('order rejected, order_id=',  server_msg['order_id'],', return message=', server_msg['error'])
+        else:
+            print('something unexpected happened in cancel_all()')
+
+
+cancel_all()
 
 if __name__ == "__main__":
     main()
