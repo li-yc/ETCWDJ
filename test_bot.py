@@ -52,6 +52,11 @@ record = []
 book_record = {}
 
 
+def dumps():
+    with open('data') as f:
+        pass
+
+
 def hello():
     return {"type": "hello", "team": team_name.upper()}
 
@@ -86,10 +91,10 @@ def process(info):
     elif info["type"] == "book":
         buy = info['buy']
         sell = info['sell']
-        best_sell = buy[0]
+        best_buy = buy[0]
         for abuy in buy:
-            if abuy[0] > best_sell[0]:
-                best_sell = abuy
+            if abuy[0] > best_buy[0]:
+                best_buy = abuy
 
         best_buy = sell[0]
         for asell in sell:
@@ -116,7 +121,9 @@ def main():
     exchange = connect()
     id = 1
     write_to_exchange(exchange, hello())
-    while (1):
+    i=0
+    while i<10:
+        i = i+1
         try:
             info = read_from_exchange(exchange)
             print('info: ', info)
