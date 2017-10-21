@@ -113,6 +113,13 @@ def process(info):
         pass
     else:
         pass
+
+
+def processInfo(exchange):
+    info = read_from_exchange(exchange)
+    process(info)
+    return info
+
 # ~~~~~============== MAIN LOOP ==============~~~~~
 
 
@@ -121,6 +128,7 @@ def main():
     exchange = connect()
     id = 1
     write_to_exchange(exchange, hello())
+    process(read_from_exchange(exchange))
     i = 0
     while i < 10:
         i = i + 1
@@ -128,8 +136,10 @@ def main():
             info = read_from_exchange(exchange)
             print('info: ', info)
             process(info)
+            print('putting buy order')
             write_to_exchange(exchange, buy(id, "USD", 79980, 1))
             process(read_from_exchange(exchange))
+            print('putting sell order')
             write_to_exchange(exchange, sell(id, "USD", 80020, 1))
             process(read_from_exchange(exchange))
 
@@ -165,7 +175,8 @@ def cancel_all():
         elif server_msg['type'] == 'reject':
             print('order rejected, order_id=',  server_msg['order_id'],', return message=', server_msg['error'])
         else:
-            print('something unexpected happened in cancel_all()')
+            print('something unexpected in cancel_all(), msg_type=', server_msg['type'])
+
 
 
 cancel_all()
