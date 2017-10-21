@@ -60,21 +60,21 @@ def hello():
     return {"type": "hello", "team": team_name.upper()}
 
 
-def buy(id, sym, price, size):
-    return {"type": "add", "order_id": id, "symbol": "SYM", "dir": "BUY", "price": price, "size": size}
+def buy(index, symbol, price, size):
+    return {"type": "add", "order_id": index, "symbol": symbol, "dir": "BUY", "price": price, "size": size}
 
 
-def sell(id, sym, price, size):
-    return {"type": "add", "order_id": id, "symbol": "SYM", "dir": "SELL", "price": price, "size": size}
+def sell(index, symbol, price, size):
+    return {"type": "add", "order_id": index, "symbol": symbol, "dir": "SELL", "price": price, "size": size}
 
 
-def add_trade(sym, price, size):
+def add_trade(symbol, price, size):
     global record
     try:
-        record[sym].append((price, size))
-    except Exception as e:
+        record[symbol].append((price, size))
+    except NameError or TypeError:
         record = []
-        record[sym].append((price, size))
+        record[symbol].append((price, size))
 
 
 def process(info):
