@@ -101,14 +101,17 @@ def main():
     id = 1
     write_to_exchange(exchange, hello())
     while (1):
-        info = read_from_exchange(exchange)
-        print(info)
-        process(info)
-        write_to_exchange(exchange, buy(id, "USD", 78000, 10))
-        info = read_from_exchange(exchange)
-        id += 1
-        write_to_exchange(exchange, sell(id, "USD", 82000, 10))
-        time.sleep(5)
+        try:
+            info = read_from_exchange(exchange)
+            print(info)
+            process(info)
+            write_to_exchange(exchange, buy(id, "USD", 78000, 10))
+            info = read_from_exchange(exchange)
+            id += 1
+            write_to_exchange(exchange, sell(id, "USD", 82000, 10))
+            time.sleep(5)
+        except Exception as e1:
+            continue
     # A common mistake people make is to call write_to_exchange() > 1
     # time for every read_from_exchange() response.
     # Since many write messages generate marketdata, this will cause an
