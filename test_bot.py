@@ -10,6 +10,11 @@ import json
 import time
 
 # ~~~~~============== CONFIGURATION  ==============~~~~~
+
+
+def put(msg, msg2=' '):
+    print(msg, msg2)
+
 # replace REPLACEME with your team name!
 team_name= "WUDUJIAO"
 # This variable dictates whether or not the bot is connecting to the prod
@@ -36,6 +41,7 @@ def connect():
 
 
 def write_to_exchange(exchange, obj):
+    put('writing to exchange...')
     json.dump(obj, exchange)
     exchange.write("\n")
 
@@ -134,12 +140,12 @@ def main():
         i = i + 1
         try:
             info = read_from_exchange(exchange)
-            print('info: ', info)
+            put('info: ', info)
             process(info)
-            print('putting buy order')
+            put('putting buy order')
             write_to_exchange(exchange, buy(id, "USD", 79980, 1))
             process(read_from_exchange(exchange))
-            print('putting sell order')
+            put('putting sell order')
             write_to_exchange(exchange, sell(id, "USD", 80020, 1))
             process(read_from_exchange(exchange))
 
