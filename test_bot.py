@@ -142,11 +142,14 @@ def main():
         i = i + 1
         try:
             put('putting buy order')
-            write_to_exchange(exchange, buy(id, "USD", 79998, 1))
+            buy_order = {
+
+            }
+            write_to_exchange(exchange, buy(id, "USDHKD", 79996, 10))
             process_info(exchange, 2, interval=0.2)
             put('putting sell order')
             id += 1
-            write_to_exchange(exchange, sell(id, "USD", 80002, 1))
+            write_to_exchange(exchange, sell(id, "USDHKD", 80004, 10))
             process_info(exchange, 2, interval=0.2)
             print('i:', i)
             id += 1
@@ -178,7 +181,7 @@ def cancel_all():
         elif server_msg['type'] == 'out':
             print('canceling all: order_id=', server_msg['order_id'])
         elif server_msg['type'] == 'reject':
-            print('order rejected, order_id=',  server_msg['order_id'],', return message=', server_msg['error'])
+            print('order rejected, order_id=',  server_msg['order_id'], ', return message=', server_msg['error'])
         else:
             print('something unexpected in cancel_all(), msg_type=', server_msg['type'])
 
