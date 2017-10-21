@@ -150,13 +150,13 @@ def main():
             process_info(exchange, 2, interval=0.2)
             print('i:', i)
             id += 1
-#        except Exception as e:
-#            print('ERROR:', e)
+        except Exception as e:
+            print('ERROR in main():', e)
     # A common mistake people make is to call write_to_exchange() > 1
     # time for every read_from_exchange() response.
     # Since many write messages generate marketdata, this will cause an
     # exponential explosion in pending messages. Please, don't do that!
-        
+
 
 def cancel_all():
     index = 0
